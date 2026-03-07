@@ -1,109 +1,64 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+- プロジェクト概要
+  　　　個人用タスク管理Webアプリケーション
+  　　　日々のタスクを記録し、完了・未完了を管理できるWebアプリです。
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+- 技術スタック
+  　　 GitHub
+  Git
+  Node.js
+  　　 Next.js 16（App Router）
+  TypeScript
+  Supabase
+  Tailwind CSS
+  Vercel
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+- セットアップ手順1. Next.js 16（App Router）プロジェクトを作成し、Supabaseと連携させる
+  　　　　下記、Node.jsコマンドプロンプトに入力し実行した。
+  npx create-next-app -e with-supabase
+  .env.exampleを.env.localにリネームして、下記、追加した。
+  NEXT_PUBLIC_SUPABASE_URL=your-project-url
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable
 
-## Features
+　　　　実際の値は下記リンクのProject URLの項とPublishable keyの項からコピーペーストした。
+　　　　Use Supabase Auth with Next.js | Supabase Docs
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Proxy
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+　　2. 1.のプロジェクト(my-app)をローカルサーバーで動作させる
+　　　　下記、Node.jsコマンドプロンプトに入力し実行した。
+　　　　　npm run dev
 
-## Demo
+　　　　　これでローカルサーバが動作中となる。
+次に、ブラウザからhttp://localhost:3000/へアクセスした。
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+    3. プロジェクトのappフォルダの構成を変更する
+    	supabase authのおかげでログイン、ログアウトができるが、
 
-## Deploy to Vercel
+　　　　仕様の画面一覧とURLが対応していないため合わせた。
+　　　　　(1) authフォルダは中身をappに持っていき、authフォルダを消した。
+　　　　　(2) sign-upフォルダはsignupにリネーム
+（3） protectedフォルダはtasksにリネーム
+(4) appフォルダ以下のコードと、インポートしているcomponentsフォルダのコードを編集し、
+　　　　　　　辻褄を合わせた。
 
-Vercel deployment will guide you through creating a Supabase account and project.
+　　4. 未ログイン時に/loginへリダイレクトさせる
+　　　　　appフォルダのpage.tsxでAuthButtonがコールされている。
+　　　　　AuthButtonの処理では、ログイン中かそうでないかを判別しているため、
+ログイン中でない時にredirect(“/login”)を追加し、実現した。
+　　　　　（この方法がベストとは思えないが、一旦そうした。）
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+　　5. Vercelへデプロイするため、Githubにdevstep-task-managerという名称のpublicリポジトリを作成した
+作業手順
+　　　　　　(1) ローカルリポジトリを作成するため、下記、Git Bashに入力した。
+git clone https://github.com/beagle-san/devstep-task-manager
+(2) ローカルリポジトリ(devstep-task-managerフォルダ)にmy-appフォルダからファイルを全てコピーする
+　　　　　　(3) devstep-task-managerフォルダでローカルサーバーを動かし、ブラウザから動作を確かめた。
+　　　 　 (4) githubにpushするため、下記、Git Bashに入力した。
+git add .
+git commit -m “1st commit”
+git push origin main
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+    	     (5) GitHubとVercelは連携させているため、Vercelからdevstep-task-managerプロジェクトを選択してデプロイした。
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+　　　　　　　この時、Supabaseで使用する環境変数を設定するため、.env.localをインポートして、環境変数を設定した。
+(6) デプロイ完了後、https://devstep-task-manager-psi.vercel.app
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
-
-## Clone and run locally
-
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
-
-2. Create a Next.js app using the Supabase Starter template npx command
-
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
-
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
-
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
-
-3. Use `cd` to change into the app's directory
-
-   ```bash
-   cd with-supabase-app
-   ```
-
-4. Rename `.env.example` to `.env.local` and update the following:
-
-  ```env
-  NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=[INSERT SUPABASE PROJECT API PUBLISHABLE OR ANON KEY]
-  ```
-  > [!NOTE]
-  > This example uses `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, which refers to Supabase's new **publishable** key format.
-  > Both legacy **anon** keys and new **publishable** keys can be used with this variable name during the transition period. Supabase's dashboard may show `NEXT_PUBLIC_SUPABASE_ANON_KEY`; its value can be used in this example.
-  > See the [full announcement](https://github.com/orgs/supabase/discussions/29260) for more information.
-
-  Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
-
-5. You can now run the Next.js local development server:
-
-   ```bash
-   npm run dev
-   ```
-
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
-
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
-
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
-
-## Feedback and issues
-
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
-
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+　　　　　　　　へアクセスして、ローカルサーバと同様の動作か確かめた。
