@@ -1,64 +1,136 @@
-- プロジェクト概要
-  　　　個人用タスク管理Webアプリケーション
-  　　　日々のタスクを記録し、完了・未完了を管理できるWebアプリです。
+# Devstep Task Manager
 
-- 技術スタック
-  　　 GitHub
-  Git
-  Node.js
-  　　 Next.js 16（App Router）
-  TypeScript
-  Supabase
-  Tailwind CSS
-  Vercel
+個人用のタスク管理 Web アプリケーションです。  
+日々のタスクを記録し、完了・未完了を管理できます。  
+Next.js（App Router）と Supabase を利用して構築しています。
 
-- セットアップ手順1. Next.js 16（App Router）プロジェクトを作成し、Supabaseと連携させる
-  　　　　下記、Node.jsコマンドプロンプトに入力し実行した。
-  npx create-next-app -e with-supabase
-  .env.exampleを.env.localにリネームして、下記、追加した。
-  NEXT_PUBLIC_SUPABASE_URL=your-project-url
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable
+---
 
-　　　　実際の値は下記リンクのProject URLの項とPublishable keyの項からコピーペーストした。
-　　　　Use Supabase Auth with Next.js | Supabase Docs
+## 🚀 プロジェクト概要
 
-　　2. 1.のプロジェクト(my-app)をローカルサーバーで動作させる
-　　　　下記、Node.jsコマンドプロンプトに入力し実行した。
-　　　　　npm run dev
+本アプリは、以下の機能を備えたシンプルなタスク管理ツールです。
 
-　　　　　これでローカルサーバが動作中となる。
-次に、ブラウザからhttp://localhost:3000/へアクセスした。
+- ユーザー認証（Supabase Auth）
+- タスクの登録・一覧表示
+- タスクの完了 / 未完了管理
+- ログイン必須の保護ページ（tasks）
 
-    3. プロジェクトのappフォルダの構成を変更する
-    	supabase authのおかげでログイン、ログアウトができるが、
+---
 
-　　　　仕様の画面一覧とURLが対応していないため合わせた。
-　　　　　(1) authフォルダは中身をappに持っていき、authフォルダを消した。
-　　　　　(2) sign-upフォルダはsignupにリネーム
-（3） protectedフォルダはtasksにリネーム
-(4) appフォルダ以下のコードと、インポートしているcomponentsフォルダのコードを編集し、
-　　　　　　　辻褄を合わせた。
+## 🛠 技術スタック
 
-　　4. 未ログイン時に/loginへリダイレクトさせる
-　　　　　appフォルダのpage.tsxでAuthButtonがコールされている。
-　　　　　AuthButtonの処理では、ログイン中かそうでないかを判別しているため、
-ログイン中でない時にredirect(“/login”)を追加し、実現した。
-　　　　　（この方法がベストとは思えないが、一旦そうした。）
+- **Next.js 16（App Router）**
+- **TypeScript**
+- **Supabase**
+- **Tailwind CSS**
+- **Node.js**
+- **Git / GitHub**
+- **Vercel（デプロイ）**
 
-　　5. Vercelへデプロイするため、Githubにdevstep-task-managerという名称のpublicリポジトリを作成した
-作業手順
-　　　　　　(1) ローカルリポジトリを作成するため、下記、Git Bashに入力した。
+---
+
+## 📦 セットアップ手順
+
+### 1. Next.js プロジェクトの作成と Supabase 連携
+
+以下のコマンドで Supabase 連携済みの Next.js プロジェクトを作成。
+
+```bash
+npx create-next-app -e with-supabase
+```
+
+作成された `.env.example` を `.env.local` にリネームし、Supabase の環境変数を設定。
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-project-url
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_key
+```
+
+値は Supabase ダッシュボードの  
+**Project URL** と **Publishable key** からコピー。
+
+---
+
+### 2. ローカルサーバーの起動
+
+```bash
+npm run dev
+```
+
+ブラウザで以下にアクセスし動作確認。
+
+```
+http://localhost:3000/
+```
+
+---
+
+### 3. app フォルダ構成の調整
+
+初期テンプレートの画面構成を、仕様に合わせて以下のように変更。
+
+- `auth` フォルダ → 中身を `app` 直下へ移動し、フォルダ削除
+- `sign-up` → `signup` にリネーム
+- `protected` → `tasks` にリネーム
+- それに伴い、`app` 配下および `components` 内の import パスを修正
+
+---
+
+### 4. 未ログイン時の `/login` へのリダイレクト
+
+`app/page.tsx` 内で `AuthButton` がログイン状態を判定しているため、  
+未ログイン時に以下のようにリダイレクト処理を追加。
+
+```ts
+import { redirect } from "next/navigation";
+
+if (!session) {
+  redirect("/login");
+}
+```
+
+（※ 今後、より適切な保護ルート実装に改善予定）
+
+---
+
+## 🚀 デプロイ手順（Vercel）
+
+### 1. GitHub リポジトリの作成
+
+GitHub 上に `devstep-task-manager`（public）を作成。
+
+### 2. ローカルリポジトリの準備
+
+```bash
 git clone https://github.com/beagle-san/devstep-task-manager
-(2) ローカルリポジトリ(devstep-task-managerフォルダ)にmy-appフォルダからファイルを全てコピーする
-　　　　　　(3) devstep-task-managerフォルダでローカルサーバーを動かし、ブラウザから動作を確かめた。
-　　　 　 (4) githubにpushするため、下記、Git Bashに入力した。
+```
+
+クローンしたフォルダへ、`my-app` の全ファイルをコピー。
+
+ローカルで動作確認：
+
+```bash
+npm run dev
+```
+
+### 3. GitHub へ push
+
+```bash
 git add .
-git commit -m “1st commit”
+git commit -m "1st commit"
 git push origin main
+```
 
-    	     (5) GitHubとVercelは連携させているため、Vercelからdevstep-task-managerプロジェクトを選択してデプロイした。
+### 4. Vercel でデプロイ
 
-　　　　　　　この時、Supabaseで使用する環境変数を設定するため、.env.localをインポートして、環境変数を設定した。
-(6) デプロイ完了後、https://devstep-task-manager-psi.vercel.app
+- GitHub と Vercel を連携済みのため、Vercel ダッシュボードから  
+  `devstep-task-manager` を選択してデプロイ
+- `.env.local` をインポートし、Supabase 用の環境変数を設定
 
-　　　　　　　　へアクセスして、ローカルサーバと同様の動作か確かめた。
+デプロイ後の URL：
+
+```
+https://devstep-task-manager-psi.vercel.app
+```
+
+ローカルと同様に動作することを確認。
