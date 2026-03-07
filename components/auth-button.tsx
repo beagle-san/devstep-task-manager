@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { createClient } from "@/lib/supabase/server";
@@ -10,6 +11,12 @@ export async function AuthButton() {
   const { data } = await supabase.auth.getClaims();
 
   const user = data?.claims;
+
+  if (!user) {
+    redirect("/login");
+  } else {
+    //redirect("/tasks");
+  }
 
   return user ? (
     <div className="flex items-center gap-4">
