@@ -32,13 +32,21 @@ Next.js（App Router）と Supabase を利用して構築しています。
 ## 📦 セットアップ手順
 
 - 下記、Git Bashから実行してください。
-  `git clone https://github.com/beagle-san/devstep-task-manager`
+  `git clone https://github.com/beagle-san/devstep-task-manager.git`
 - クローンされたフォルダの中の.env.localの環境変数をご自身のsupabaseの設定に変更してください。
-  NEXT_PUBLIC_SUPABASE_URL= (ここを変更)
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY= (ここを変更)
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-project-url
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_key
+```
+
 - 下記、(クローンされたフォルダをカレントディレクトリにして)Node.jsコマンドプロンプトから実行してください。
-  　　 `npm install`
-  `npm run dev`
+
+```bash
+npm install
+npm run dev
+```
+
 - ブラウザからhttp://localhost:3000にアクセスすると、動作します。
 
 ---
