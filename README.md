@@ -31,6 +31,20 @@ Next.js（App Router）と Supabase を利用して構築しています。
 
 ## 📦 セットアップ手順
 
+- 下記、Git Bashから実行してください。
+  `git clone https://github.com/beagle-san/devstep-task-manager`
+- クローンされたフォルダの中の.env.localの環境変数をご自身のsupabaseの設定に変更してください。
+  NEXT_PUBLIC_SUPABASE_URL= (ここを変更)
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY= (ここを変更)
+- 下記、(クローンされたフォルダをカレントディレクトリにして)Node.jsコマンドプロンプトから実行してください。
+  　　 `npm install`
+  `npm run dev`
+- ブラウザからhttp://localhost:3000にアクセスすると、動作します。
+
+---
+
+## 参考資料：アプリの開発手順（プロジェクト作成〜実装の流れ）
+
 ### 1. Next.js プロジェクトの作成と Supabase 連携
 
 以下のコマンドで Supabase 連携済みの Next.js プロジェクトを作成。
@@ -134,3 +148,8 @@ https://devstep-task-manager-psi.vercel.app
 ```
 
 ローカルと同様に動作することを確認。
+
+### 5. Supabase AuthenticationのURL Configurationを変更
+
+- 新規メール登録確認の時、リダイレクト先がlocalhostとなっていたため、
+  　Site URLの項目を`http://localhost:3000`から`https://devstep-task-manager-psi.vercel.app`へ変更した。
