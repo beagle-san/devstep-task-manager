@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { TaskInput } from "@/lib/validators";
-import { updateTaskAction } from "./actions";
+import { updateTaskAction } from "@/components/actions";
 
 type Props = {
   initialValues?: Partial<TaskInput>;
