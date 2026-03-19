@@ -1,19 +1,3 @@
-// import { Suspense } from "react";
-// import TaskDetail from "./task-detail";
-// import Loading from "./loading";
-
-// type Props = {
-//   params: { id: string };
-// };
-
-// export default function TaskListPage({ params }: Props) {
-//   return (
-//     <Suspense fallback={<Loading />}>
-//       <TaskDetail params={params} />
-//     </Suspense>
-//   );
-// }
-
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";

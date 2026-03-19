@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import type { TaskInput } from "@/lib/validators";
 import { updateTaskAction } from "@/components/actions";
 
@@ -13,8 +13,7 @@ type Props = {
 };
 
 // export function TaskForm({ initialValues, submitLabel, action }: Props) {
-export function TaskForm({ initialValues, submitLabel, id }: Props) {
-  const router = useRouter();
+export function TaskFormUpdate({ initialValues, submitLabel, id }: Props) {
   const [values, setValues] = useState<TaskInput>({
     title: initialValues?.title ?? "",
     detail: initialValues?.detail ?? "",
@@ -41,19 +40,22 @@ export function TaskForm({ initialValues, submitLabel, id }: Props) {
     console.log("TaskForm");
     console.log(values);
 
+    let redirect_to = "";
     try {
       const res = await updateTaskAction(id, values);
       if (res && "error" in res && res.error) {
         setFormError(res.error);
       } else {
         console.log("updateTaskAction() is succeed");
-        //router.push("/tasks");
-        //router.refresh();
+        redirect_to = "/tasks";
       }
     } catch (err) {
       setFormError("予期せぬエラーが発生しました");
     } finally {
       setLoading(false);
+    }
+    if (redirect_to !== "") {
+      redirect(redirect_to);
     }
   };
 

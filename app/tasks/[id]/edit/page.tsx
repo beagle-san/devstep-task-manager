@@ -1,7 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { TaskForm } from "@/components/TaskForm";
-import { taskSchema } from "@/lib/validators";
+import { TaskFormUpdate } from "@/components/TaskFormUpdate";
 
 type Props = {
   params: { id: string };
@@ -34,7 +33,7 @@ export default async function EditTaskPage({ params }: Props) {
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-semibold">タスク編集</h1>
-      <TaskForm
+      <TaskFormUpdate
         submitLabel="更新"
         initialValues={{
           title: task.title,
