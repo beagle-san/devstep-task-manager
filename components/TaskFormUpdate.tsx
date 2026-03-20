@@ -109,24 +109,6 @@ export function TaskFormUpdate({ initialValues, submitLabel, id }: Props) {
         />
       </div>
 
-      <div className="flex items-center gap-2">
-        <input
-          id="status"
-          type="checkbox"
-          checked={values.status === "done"}
-          onChange={(e) =>
-            setValues((prev) => ({
-              ...prev,
-              status: e.target.checked ? "done" : "todo",
-            }))
-          }
-          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-        />
-        <label htmlFor="status" className="text-sm text-gray-700">
-          完了にする
-        </label>
-      </div>
-
       <div className="flex gap-3">
         <button
           type="submit"

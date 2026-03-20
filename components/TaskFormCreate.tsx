@@ -14,7 +14,7 @@ export function TaskFormCreate({ initialValues, submitLabel }: Props) {
   const [values, setValues] = useState<TaskInput>({
     title: initialValues?.title ?? "",
     detail: initialValues?.detail ?? "",
-    due_date: initialValues?.due_date ?? "",
+    due_date: initialValues?.due_date ?? Date(),
     status: initialValues?.status ?? "todo",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -105,7 +105,7 @@ export function TaskFormCreate({ initialValues, submitLabel }: Props) {
         />
       </div>
 
-      <div className="flex items-center gap-2">
+      {/* <div className="flex items-center gap-2">
         <input
           id="status"
           type="checkbox"
@@ -121,7 +121,7 @@ export function TaskFormCreate({ initialValues, submitLabel }: Props) {
         <label htmlFor="status" className="text-sm text-gray-700">
           完了にする
         </label>
-      </div>
+      </div> */}
 
       <div className="flex gap-3">
         <button

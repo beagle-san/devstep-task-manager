@@ -2,19 +2,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { TaskStatusBadge } from "@/components/TaskStatusBadge";
+import { LogoutButton } from "@/components/logout-button";
 import { ToggleStatus } from "./ToggleStatus";
-
-// type Task = {
-//   id: string;
-//   title: string;
-//   status: "todo" | "done";
-//   due_date: string | null;
-//   created_at: string;
-// };
 
 export default async function TaskList() {
   const supabase = await createClient();
-  const { data: user } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
+  const user = data?.claims;
 
   if (!user) {
     redirect("/login");
@@ -35,6 +29,11 @@ export default async function TaskList() {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center gap-4">
+        <LogoutButton />
+        Hey, {user.email}!
+      </div>
+
       <div className="flex items-center gap-4">
         <h1 className="text-xl font-semibold">タスク一覧</h1>
         <Link

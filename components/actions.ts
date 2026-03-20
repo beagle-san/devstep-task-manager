@@ -21,6 +21,7 @@ export async function updateTaskAction(id: string, values: any) {
       detail: parsed.data.detail || null,
       status: parsed.data.status,
       due_date: parsed.data.due_date || null,
+      updated_at: Date(),
     })
     .eq("id", id);
   //.eq("email", user.email);
