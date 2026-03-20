@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { TaskStatusBadge } from "@/components/TaskStatusBadge";
-// import { ToggleStatus } from "./ToggleStatus";
+import { ToggleStatus } from "./ToggleStatus";
 
 // type Task = {
 //   id: string;
@@ -57,36 +57,7 @@ export default async function TaskList() {
                 className="flex items-center justify-between px-4 py-3 text-sm"
               >
                 <div className="flex items-center gap-3">
-                  {/* 完了/未完了切り替え */}
-                  {/* <ToggleStatus
-                    defaultChecked={isDone}
-                    action={() => ToggleStatus(task.id, isDone)}
-                  /> */}
-
-                  <form
-                    action={async () => {
-                      "use server";
-                      const supabase = await createClient();
-                      const {
-                        data: { user },
-                      } = await supabase.auth.getUser();
-                      if (!user) return;
-                      await supabase
-                        .from("tasks")
-                        .update({
-                          status: isDone ? "todo" : "done",
-                        })
-                        .eq("id", task.id)
-                        .eq("email", user.email);
-                    }}
-                  >
-                    {/* <input
-                      type="checkbox"
-                      defaultChecked={isDone}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600"
-                      onChange={() => {}}
-                    /> */}
-                  </form>
+                  <ToggleStatus defaultChecked={isDone} taskID={task.id} />
 
                   <div>
                     <Link
