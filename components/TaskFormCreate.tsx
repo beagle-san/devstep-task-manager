@@ -24,6 +24,23 @@ export function TaskFormCreate({ submitLabel }: Props) {
     (field: keyof TaskInput) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setValues((prev) => ({ ...prev, [field]: e.target.value }));
+
+      // バリデーション
+      if (field === "title") {
+        if (values.title.length > 100) {
+          setFormError("タイトルは 100 文字以内で入力してください");
+          return;
+        } else {
+          setFormError(null);
+        }
+      } else if (values.detail != undefined) {
+        if (values.detail.length > 500) {
+          setFormError("詳細は 500 文字以内で入力してください");
+          return;
+        } else {
+          setFormError(null);
+        }
+      }
     };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -74,9 +91,9 @@ export function TaskFormCreate({ submitLabel }: Props) {
         </label>
         <input
           type="text"
-          value={values.title ?? ""}
+          value={values.title}
           onChange={handleChange("title")}
-          maxLength={100}
+          //maxLength={100}
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           required
         />
@@ -92,7 +109,7 @@ export function TaskFormCreate({ submitLabel }: Props) {
         <textarea
           value={values.detail ?? ""}
           onChange={handleChange("detail")}
-          maxLength={500}
+          //maxLength={500}
           rows={4}
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         />
