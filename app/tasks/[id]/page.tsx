@@ -44,6 +44,23 @@ export default async function TaskDetailPage({ params }: Props) {
     redirect("/tasks");
   }
 
+  // function toJST(dateString: string): string {
+  //   const date = new Date(dateString);
+  //   return new Date(date.getTime() + 9 * 60 * 60 * 1000).toString();
+  // }
+
+  function formatJST(dateString: string) {
+    return new Intl.DateTimeFormat("ja-JP", {
+      timeZone: "Asia/Tokyo",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(new Date(dateString));
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
@@ -54,8 +71,8 @@ export default async function TaskDetailPage({ params }: Props) {
       <div className="space-y-2 text-sm text-gray-700">
         <p className="whitespace-pre-wrap">{task.detail || "（詳細なし）"}</p>
         <p>期限日: {task.due_date ?? "未設定"}</p>
-        <p>作成日時: {new Date(task.created_at).toLocaleString("ja-JP")}</p>
-        <p>更新日時: {new Date(task.updated_at).toLocaleString("ja-JP")}</p>
+        <p>作成日時: {formatJST(task.created_at)}</p>
+        <p>更新日時: {formatJST(task.updated_at)}</p>
       </div>
 
       <div className="flex gap-3">

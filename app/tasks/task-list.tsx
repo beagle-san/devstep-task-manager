@@ -25,6 +25,25 @@ export default async function TaskList() {
     console.error(error);
   }
 
+  // function toJST(dateString: string): string {
+  //   const date = new Date(dateString);
+  //   console.log(date);
+  //   return new Date(date.getTime() + 0 * 60 * 60 * 1000).toLocaleString(
+  //     "ja-JP",
+  //   );
+  // }
+  function formatJST(dateString: string) {
+    return new Intl.DateTimeFormat("ja-JP", {
+      timeZone: "Asia/Tokyo",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(new Date(dateString));
+  }
+
   // return <pre>{JSON.stringify(tasks, null, 2)}</pre>;
 
   return (
@@ -70,10 +89,7 @@ export default async function TaskList() {
                     <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
                       <TaskStatusBadge status={task.status} />
                       {task.due_date && <span>期限: {task.due_date}</span>}
-                      <span>
-                        作成:{" "}
-                        {new Date(task.created_at).toLocaleString("ja-JP")}
-                      </span>
+                      <span>作成: {formatJST(task.created_at)}</span>
                     </div>
                   </div>
                 </div>
